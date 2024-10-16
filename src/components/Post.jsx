@@ -35,8 +35,12 @@ export function Post({ author, content, publishedAt }) {
     setNewCommentText(event.target.value);
   }
 
-  function deleteComment(comment) {
-    console.log(`Deletar comentário ${comment}`);
+  function deleteComment(commentToDelete) {
+    const commentWithoutDeletedOne = comments.filter(comment => {
+      return comment !== commentToDelete
+    })
+
+    setComments(commentWithoutDeletedOne)
   }
 
   return (
@@ -61,10 +65,10 @@ export function Post({ author, content, publishedAt }) {
       <div className={styles.content}>
         {content.map((line) => {
           if (line.type === "paragraph") {
-            return <p key={line.type}>{line.content}</p>;
+            return <p key={line.content}>{line.content}</p>;
           } else if (line.type === "link") {
             return (
-              <p key={line.type}>
+              <p key={line.content}>
                 <a href="#">{line.content}</a>
               </p>
             );
